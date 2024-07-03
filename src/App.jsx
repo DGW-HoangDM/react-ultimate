@@ -3,11 +3,13 @@ import TodoNew from "./components/todo/TodoNew";
 import "./components/todo/todo.css";
 import reactLogo from "./assets/react.svg";
 
+import { useState } from 'react';
+
 const App = () => {
-  const data = {
-    address: "Da Nang",
-    country: "Viet Nam",
-  };
+  const [todoList, setTodoList] = useState([
+    { id: 1, name: " Learning Js" },
+    { id: 2, name: " Learning Java" },
+  ]);
 
   const addNewTodo = () => {
     console.log("Add new todo");
@@ -16,8 +18,8 @@ const App = () => {
     <>
       <div className="todo-container">
         <div className="todo-title">Todo List</div>
-        <TodoNew data={data} addNewTodo={addNewTodo} />
-        <TodoData />
+        <TodoNew addNewTodo={addNewTodo} />
+        <TodoData todoList={todoList} />
         <div className="todo-image">
           <img src={reactLogo} className="logo" />
         </div>
