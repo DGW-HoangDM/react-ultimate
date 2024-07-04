@@ -5,7 +5,9 @@ import App from './App.jsx'
 import LoginPage from './pages/login.jsx';
 import RegisterPage from './pages/register.jsx';
 import UserPage from './pages/user.jsx';
-import ProductPage from './pages/product.jsx';
+import BookPage from './pages/book.jsx';
+import ToDoApp from './components/todo/ToDoApp';
+import ErrorPage from "./pages/error";
 import './styles/global.css'
 
 import {
@@ -17,15 +19,23 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/users",
-    element: <UserPage />,
-  },
-  {
-    path: "/products",
-    element: <ProductPage />,
-  },
+    errorElement: <ErrorPage />,
+    children: [
+      { 
+        index: true, 
+        element: <ToDoApp /> 
+      },
+      {
+        path: "/users",
+        index: true,
+        element: <UserPage />,
+      },
+      {
+        path: "/books",
+        element: <BookPage />,
+      },
+    ],
+  },  
   {
     path: "/login",
     element: <LoginPage />,
