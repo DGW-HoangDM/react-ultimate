@@ -8,6 +8,8 @@ const TodoNew = (props) => {
 
   const handleClick = () => {
     console.log('handleClick');
+    addNewTodo(valueInput);
+    setValueInput("");
   }
 
   const handleOnChange = (value) => {
@@ -17,7 +19,7 @@ const TodoNew = (props) => {
 
   return (
     <div className="todo-new">
-      <input type="text" onChange={(event) => handleOnChange(event.target.value)} />
+      <input type="text" onChange={(event) => handleOnChange(event.target.value)} value={valueInput} />
       <button onClick={handleClick}>Add</button>
       My input: {valueInput}
     </div>
