@@ -30,3 +30,9 @@ Cách chạy tại chế độ production:
 
   - <input type="text" onChange={(event) => handleOnChange(event.target.value)} />
     => Truyền data cho function thì dùng arrow function
+
+
+2. account mongodb atlas
+  - dmhoang
+  - sdgEOKI5JEfJid4W
+  - mongodb+srv://dmhoang:sdgEOKI5JEfJid4W@cluster0.prf7apo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
