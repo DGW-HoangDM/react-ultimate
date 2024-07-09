@@ -12,7 +12,7 @@ const UserForm = () => {
 
   const handleCreateUser = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
-    if(res.data && res.data.data){
+    if(res.data){
       notification.success({
         message: "Create user",
         description: "Tạo user thành công"
