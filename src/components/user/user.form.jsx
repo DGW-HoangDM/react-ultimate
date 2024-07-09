@@ -1,4 +1,13 @@
-import { Input, notification, Col, Row, Button, Flex,Space, Typography } from "antd";
+import {
+  Input,
+  notification,
+  Col,
+  Row,
+  Button,
+  Flex,
+  Space,
+  Typography,
+} from "antd";
 const { Text, Link } = Typography;
 
 import { useState } from "react";
@@ -12,16 +21,16 @@ const UserForm = () => {
 
   const handleCreateUser = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
-    if(res.data){
+    if (res.data) {
       notification.success({
         message: "Create user",
-        description: "Tạo user thành công"
-      })
-    }else {
+        description: "Tạo user thành công",
+      });
+    } else {
       notification.error({
         message: "Error Create user",
         description: JSON.stringify(res.message),
-      })
+      });
     }
   };
 
