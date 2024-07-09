@@ -27,7 +27,9 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
+  if(error.response && error.response.data) return error.response.data;
   return Promise.reject(error);
 });
 
 export default instance;
+// xử lý interceptor mục đích format data trả về từ BE cho FE giễ xử dụng
