@@ -7,8 +7,9 @@ import {
   Flex,
   Space,
   Typography,
+  Modal,
 } from "antd";
-const { Text, Link } = Typography;
+const { Text, Link, Title } = Typography;
 
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
@@ -19,13 +20,15 @@ const UserForm = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
 
-  const handleCreateUser = async () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOk = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
     if (res.data) {
       notification.success({
         message: "Create user",
         description: "Tạo user thành công",
       });
+      setIsModalOpen(false);
     } else {
       notification.error({
         message: "Error Create user",
@@ -38,53 +41,71 @@ const UserForm = () => {
     <div
       style={{ display: "flex", gap: 20, flexDirection: "column", padding: 20 }}
     >
-      <Row>
-        <Text>Full name</Text>
-        <Input
-          placeholder="fullName"
-          value={fullName}
-          onChange={(e) => {
-            setFullName(e.target.value);
-          }}
-        />
-      </Row>
-      <Row>
-        <Text>Email</Text>
-        <Input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-      </Row>
-      <Row>
-        <Text>Password</Text>
-        <Input.Password
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-      </Row>
-      <Row>
-        <Text>Phone number</Text>
-        <Input
-          placeholder="Phone number"
-          type="number"
-          value={phone}
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-      </Row>
-      <Row>
-        <Button type="primary" onClick={handleCreateUser}>
+      <Row style={{ display: "flex", justifyContent: "space-between" }}>
+        <Title level={4}>Table User</Title>
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
           Create user
         </Button>
       </Row>
+
+      <Modal
+        title="Create User"
+        okText="CREATE"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: 20,
+            flexDirection: "column",
+          }}
+        >
+          <Row>
+            <Text>Full name</Text>
+            <Input
+              placeholder="fullName"
+              value={fullName}
+              onChange={(e) => {
+                setFullName(e.target.value);
+              }}
+            />
+          </Row>
+          <Row>
+            <Text>Email</Text>
+            <Input
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </Row>
+          <Row>
+            <Text>Password</Text>
+            <Input.Password
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </Row>
+          <Row>
+            <Text>Phone number</Text>
+            <Input
+              placeholder="Phone number"
+              type="number"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            />
+          </Row>
+        </div>
+      </Modal>
     </div>
   );
 };
