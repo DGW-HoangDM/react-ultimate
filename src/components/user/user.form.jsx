@@ -14,21 +14,24 @@ const { Text, Link, Title } = Typography;
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
+  const { loadUser } = props;
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOk = async () => {
+  
+  const handleSubmitCreateUser = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
     if (res.data) {
       notification.success({
         message: "Create user",
         description: "Tạo user thành công",
       });
-      setIsModalOpen(false);
+      resetCloseModal();
+      await loadUser();
     } else {
       notification.error({
         message: "Error Create user",
@@ -37,6 +40,13 @@ const UserForm = () => {
     }
   };
 
+  const resetCloseModal = () => {
+    setIsModalOpen(false);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
+  }
   return (
     <div
       style={{ display: "flex", gap: 20, flexDirection: "column", padding: 20 }}
@@ -52,8 +62,8 @@ const UserForm = () => {
         title="Create User"
         okText="CREATE"
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={() => setIsModalOpen(false)}
+        onOk={handleSubmitCreateUser}
+        onCancel={resetCloseModal}
       >
         <div
           style={{

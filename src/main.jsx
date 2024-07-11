@@ -24,7 +24,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/users",
-        index: true,
         element: <UserPage />,
       },
       {
