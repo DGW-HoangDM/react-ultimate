@@ -16,7 +16,18 @@ const fetchAllUser = () => {
   return axios.get(URL_BACKEND);
 }
 
+const updateUser = (id, fullName, phone) => {
+  const URL_BACKEND = "/api/v1/user";
+  const data = {
+    _id: id,
+    fullName: fullName,
+    phone: phone,
+  }
+  return axios.put(URL_BACKEND, data);
+}
+
 export {
   createUserAPI,
-  fetchAllUser
+  fetchAllUser,
+  updateUser
 }

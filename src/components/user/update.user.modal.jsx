@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { Input, notification, Row, Typography, Modal } from "antd";
 const { Text, Link, Title } = Typography;
-import { createUserAPI } from "../../services/api.service";
+import { updateUser } from "../../services/api.service";
 
 const UpdateUserModal = (props) => {
   const [id, setId] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
-  const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate } = props;
+  const {
+    isModalUpdateOpen,
+    setIsModalUpdateOpen,
+    dataUpdate,
+    setDataUpdate,
+    loadUser,
+  } = props;
 
   useEffect(() => {
     // console.log('useEffect dataUpdate props', dataUpdate);
@@ -17,21 +23,22 @@ const UpdateUserModal = (props) => {
     setPhone(dataUpdate.phone);
   }, [dataUpdate]);
 
-  const handleSubmitBtn = async () => {
-    // const res = await createUserAPI(fullName, email, password, phone);
-    // if (res.data) {
-    //   notification.success({
-    //     message: "Create user",
-    //     description: "Tạo user thành công",
-    //   });
-    //   resetAndCloseModal();
-    //   // await loadUser();
-    // } else {
-    //   notification.error({
-    //     message: "Error create user",
-    //     description: JSON.stringify(res.message),
-    //   });
-    // }
+  const handleUpdateUser = async () => {
+    const res = await updateUser(id, fullName, phone);
+
+    if (res.data) {
+      notification.success({
+        message: "Update user",
+        description: "Update user thành công",
+      });
+      resetAndCloseModal();
+      await loadUser();
+    } else {
+      notification.error({
+        message: "Error update user",
+        description: JSON.stringify(res.message),
+      });
+    }
   };
 
   const resetAndCloseModal = () => {
@@ -41,23 +48,18 @@ const UpdateUserModal = (props) => {
     setPhone("");
   };
 
-  
   return (
     <Modal
       title="Update a User"
       okText={"SAVE"}
       open={isModalUpdateOpen}
-      onOk={() => handleSubmitBtn()}
+      onOk={() => handleUpdateUser()}
       onCancel={() => resetAndCloseModal()}
     >
       <div style={{ display: "flex", gap: 20, flexDirection: "column" }}>
         <Row>
           <Text>ID</Text>
-          <Input
-            placeholder=""
-            value={id}
-            disabled
-          />
+          <Input placeholder="" value={id} disabled />
         </Row>
         <Row>
           <Text>Full name</Text>

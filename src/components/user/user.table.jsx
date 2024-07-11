@@ -6,7 +6,7 @@ import UpdateUserModal from "./update.user.modal";
 import { fetchAllUser } from "../../services/api.service";
 
 const UserTable = (props) => {
-  const { dataUser } = props;
+  const { dataUser, loadUser } = props;
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
   const columns = [
@@ -47,7 +47,7 @@ const UserTable = (props) => {
   const handleUpdateUser = (user) => {
     setDataUpdate(user);
     setIsModalUpdateOpen(true);
-  }
+  };
   return (
     <>
       <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
@@ -56,6 +56,7 @@ const UserTable = (props) => {
         setIsModalUpdateOpen={setIsModalUpdateOpen}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
+        loadUser={loadUser}
       />
     </>
   );
