@@ -8,6 +8,7 @@ import { fetchAllUser } from "../../services/api.service";
 const UserTable = (props) => {
   const { dataUser } = props;
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
   const columns = [
     {
       key: "_id",
@@ -34,10 +35,7 @@ const UserTable = (props) => {
       render: (_, record) => (
         <div style={{ display: "flex", gap: "20px" }}>
           <EditOutlined
-            onClick={() => {
-              console.log('ckeck record', record);
-              setIsModalUpdateOpen(true);
-            }}
+            onClick={() => handleUpdateUser(record)}
             style={{ cursor: "pointer", color: "orange" }}
           />
           <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
@@ -46,12 +44,18 @@ const UserTable = (props) => {
     },
   ];
 
+  const handleUpdateUser = (user) => {
+    setDataUpdate(user);
+    setIsModalUpdateOpen(true);
+  }
   return (
     <>
       <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
       <UpdateUserModal
         isModalUpdateOpen={isModalUpdateOpen}
         setIsModalUpdateOpen={setIsModalUpdateOpen}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
       />
     </>
   );
