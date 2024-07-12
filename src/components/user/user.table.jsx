@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { Space, Table, Tag } from "antd";
+import { Space, Table, Tag, Popconfirm, notification } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserModal from "./update.user.modal";
 import ViewUserDetail from "./view.user.detail";
-import { fetchAllUser } from "../../services/api.service";
+import { deleteUserAPI } from "../../services/api.service";
 
 const UserTable = (props) => {
   const { dataUser, loadUser } = props;
@@ -19,7 +19,11 @@ const UserTable = (props) => {
       title: "Full Name",
       dataIndex: "fullName",
       render: (_, record) => {
-        return <a href="#" onClick={() => handleDetailUser(record)}>{record.fullName}</a>;
+        return (
+          <a href="#" onClick={() => handleDetailUser(record)}>
+            {record.fullName}
+          </a>
+        );
       },
     },
     {
@@ -42,7 +46,16 @@ const UserTable = (props) => {
             onClick={() => handleUpdateUser(record)}
             style={{ cursor: "pointer", color: "orange" }}
           />
-          <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          <Popconfirm
+            title="Delete user"
+            description="Are you sure to delete this user?"
+            onConfirm={() => handleDeleteUser(record._id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          </Popconfirm>
         </div>
       ),
     },
@@ -57,6 +70,26 @@ const UserTable = (props) => {
     setDataDetailUser(user);
     setIsDetailUserOpen(true);
   };
+
+  const handleDeleteUser = async (id) => {
+    const res = await deleteUserAPI(id);
+    if (res.data) {
+      notification.success({
+        message: "Delete user",
+        description: "Delete user succeed",
+      });
+      await loadUser();
+    } else {
+      notification.error({
+        message: "Error Delete user",
+        description: JSON.stringify(res.message),
+      });
+    }
+  };
+  const cancel = (e) => {
+    // console.log(e);
+    return;
+  };
   return (
     <>
       <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
@@ -67,7 +100,7 @@ const UserTable = (props) => {
         setDataUpdate={setDataUpdate}
         loadUser={loadUser}
       />
-      <ViewUserDetail 
+      <ViewUserDetail
         dataDetailUser={dataDetailUser}
         setDataDetailUser={setDataDetailUser}
         isDetailUserOpen={isDetailUserOpen}
