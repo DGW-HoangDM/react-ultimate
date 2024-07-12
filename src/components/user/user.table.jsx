@@ -3,19 +3,23 @@ import { useState } from "react";
 import { Space, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserModal from "./update.user.modal";
+import ViewUserDetail from "./view.user.detail";
 import { fetchAllUser } from "../../services/api.service";
 
 const UserTable = (props) => {
   const { dataUser, loadUser } = props;
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+
+  const [dataDetailUser, setDataDetailUser] = useState({});
+  const [isDetailUserOpen, setIsDetailUserOpen] = useState(false);
   const columns = [
     {
       key: "_id",
       title: "Full Name",
       dataIndex: "fullName",
       render: (_, record) => {
-        return <a href="#">{record.fullName}</a>;
+        return <a href="#" onClick={() => handleDetailUser(record)}>{record.fullName}</a>;
       },
     },
     {
@@ -48,6 +52,11 @@ const UserTable = (props) => {
     setDataUpdate(user);
     setIsModalUpdateOpen(true);
   };
+
+  const handleDetailUser = (user) => {
+    setDataDetailUser(user);
+    setIsDetailUserOpen(true);
+  };
   return (
     <>
       <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
@@ -57,6 +66,12 @@ const UserTable = (props) => {
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
         loadUser={loadUser}
+      />
+      <ViewUserDetail 
+        dataDetailUser={dataDetailUser}
+        setDataDetailUser={setDataDetailUser}
+        isDetailUserOpen={isDetailUserOpen}
+        setIsDetailUserOpen={setIsDetailUserOpen}
       />
     </>
   );
