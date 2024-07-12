@@ -18,9 +18,11 @@ const UpdateUserModal = (props) => {
 
   useEffect(() => {
     // console.log('useEffect dataUpdate props', dataUpdate);
-    setId(dataUpdate._id);
-    setFullName(dataUpdate.fullName);
-    setPhone(dataUpdate.phone);
+    if(dataUpdate){
+      setId(dataUpdate._id);
+      setFullName(dataUpdate.fullName);
+      setPhone(dataUpdate.phone);
+    }
   }, [dataUpdate]);
 
   const handleUpdateUser = async () => {
@@ -42,6 +44,7 @@ const UpdateUserModal = (props) => {
   };
 
   const resetAndCloseModal = () => {
+    setDataUpdate({});
     setIsModalUpdateOpen(false);
     setFullName("");
     setId("");

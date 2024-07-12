@@ -18,7 +18,10 @@ const ViewUserDetail = (props) => {
   return (
     <Drawer
       title="Detail User"
-      onClose={() => setIsDetailUserOpen(false)}
+      onClose={() => {
+        setDataDetailUser({});
+        setIsDetailUserOpen(false);
+      }}
       open={isDetailUserOpen}
     >
       {
