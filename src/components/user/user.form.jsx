@@ -1,15 +1,12 @@
 import {
   Input,
   notification,
-  Col,
   Row,
   Button,
-  Flex,
-  Space,
   Typography,
   Modal,
 } from "antd";
-const { Text, Link, Title } = Typography;
+const { Text, Title } = Typography;
 
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";

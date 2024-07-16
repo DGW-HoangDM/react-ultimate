@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input, notification, Row, Typography, Modal } from "antd";
-const { Text, Link, Title } = Typography;
+const { Text } = Typography;
 import { updateUser } from "../../services/api.service";
 
 const UpdateUserModal = (props) => {

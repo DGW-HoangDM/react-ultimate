@@ -1,6 +1,5 @@
-import React from "react";
 import { useState } from "react";
-import { Space, Table, Tag, Popconfirm, notification } from "antd";
+import { Table, Popconfirm, notification } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserModal from "./update.user.modal";
 import ViewUserDetail from "./view.user.detail";
@@ -37,7 +36,6 @@ const UserTable = (props) => {
       dataIndex: "email",
     },
     {
-      key: "_id",
       title: "Action",
       key: "action",
       render: (_, record) => (
@@ -86,7 +84,7 @@ const UserTable = (props) => {
       });
     }
   };
-  const cancel = (e) => {
+  const cancel = () => {
     // console.log(e);
     return;
   };
