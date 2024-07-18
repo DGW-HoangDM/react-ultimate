@@ -11,8 +11,8 @@ const createUserAPI = (fullName, email, password, phone) => {
   return axios.post(URL_BACKEND, data);
 }
 
-const fetchAllUser = () => {
-  const URL_BACKEND = "/api/v1/user";
+const fetchAllUser = (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
   return axios.get(URL_BACKEND);
 }
 
