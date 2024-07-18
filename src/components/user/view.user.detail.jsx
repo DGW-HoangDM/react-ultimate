@@ -1,5 +1,7 @@
-import { Drawer } from "antd";
+import { Drawer, Button, notification } from "antd";
 import { useState } from "react";
+import { handleUploadFile, updateAvatarUser } from "../../services/api.service";
+
 import {
   WhatsAppOutlined,
   MailOutlined,
@@ -12,6 +14,7 @@ const ViewUserDetail = (props) => {
     setDataDetailUser,
     isDetailUserOpen,
     setIsDetailUserOpen,
+    loadUser,
   } = props;
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -24,10 +27,49 @@ const ViewUserDetail = (props) => {
       return;
     }
     const file = event.target.files[0];
-    if(file){
+    if (file) {
       setSelectedFile(file);
       const objectUrl = URL.createObjectURL(file);
       setPreview(objectUrl);
+    }
+  };
+
+  const handleUpdateUserAvatar = async () => {
+    //step1: upload file
+    const resUpload = await handleUploadFile(selectedFile, "avatar");
+    if (resUpload.data) {
+      //step2: update user
+      const newAvatar = resUpload.data.fileUploaded;
+      const { _id, fullName, phone } = dataDetailUser;
+      const resUpdateAvatar = await updateAvatarUser(
+        _id,
+        fullName,
+        phone,
+        newAvatar
+      );
+      if (resUpdateAvatar.data) {
+        //Clear data
+        setIsDetailUserOpen(false);
+        setSelectedFile(null);
+        setPreview(null);
+        //Load again user
+        await loadUser();
+
+        notification.success({
+          message: "Update avatar user",
+          description: "Update avatar thành công",
+        });
+      } else {
+        notification.error({
+          message: "Error update avatar",
+          description: JSON.stringify(resUpdateAvatar.message),
+        });
+      }
+    } else {
+      notification.error({
+        message: "Error Update Avatar user",
+        description: JSON.stringify(resUpload.message),
+      });
     }
   };
 
@@ -98,27 +140,32 @@ const ViewUserDetail = (props) => {
               id="btnUpload"
             />
           </div>
-          {preview &&
-            <div
-              style={{
-                marginTop: 10,
-                height: 100,
-                width: 100,
-                border: "1px solid #ccc",
-              }}
-            >
-              <img
+          {preview && (
+            <>
+              <div
                 style={{
-                  objectFit: "contain",
-                  height: "100%",
-                  width: "100%",
+                  marginTop: 10,
+                  height: 100,
+                  width: 100,
+                  marginBottom: 5,
                 }}
-                height={150}
-                width={150}
-                src={preview}
-              />
-            </div>
-          }
+              >
+                <img
+                  style={{
+                    objectFit: "contain",
+                    height: "100%",
+                    width: "100%",
+                  }}
+                  height={150}
+                  width={150}
+                  src={preview}
+                />
+              </div>
+              <Button type="primary" onClick={() => handleUpdateUserAvatar()}>
+                Save
+              </Button>
+            </>
+          )}
         </>
       ) : (
         <>
