@@ -1,5 +1,6 @@
 import { Button, Form, Input, notification } from "antd";
 import { registerUser } from "../services/api.service";
+import {isVietnamesePhoneNumber} from "../helpers/common.help"
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
@@ -80,7 +81,7 @@ const RegisterPage = () => {
           rules={[
             {
               required: true,
-              pattern: new RegExp(/\d+/g),
+              pattern: isVietnamesePhoneNumber(),
               message: "Wrong format!",
             },
           ]}
