@@ -36,3 +36,9 @@ Cách chạy tại chế độ production:
   - dmhoang
   - sdgEOKI5JEfJid4W
   - mongodb+srv://dmhoang:sdgEOKI5JEfJid4W@cluster0.prf7apo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+3. keep login
+  - Truyền access token vào Request Headers
+  - BE tạo API có nhiệm vụ trả về thông tin user tương ứng với access token đó
+  - Tại application (trong dự án là file App.jsx) gọi API đó để tất cả các component khác dùng được thông tin user

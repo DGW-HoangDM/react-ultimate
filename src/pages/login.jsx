@@ -30,6 +30,12 @@ const LoginPage = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      form.submit();
+    }
+  }
+
   return (
     <Row justify={"center"} style={{ marginTop: "30px" }}>
       <Col xs={24} md={16} lg={8}>
@@ -70,7 +76,7 @@ const LoginPage = () => {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password onKeyDown={(e) => handleKeyDown(e)} />
             </Form.Item>
 
             <Form.Item>
