@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     // console.log("Received values of form: ", values);
@@ -21,6 +22,7 @@ const RegisterPage = () => {
         message: "Register user",
         description: "Register user succeed",
       });
+      navigate("/login");
     } else {
       notification.error({
         message: "Error Register user",

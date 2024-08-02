@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Row, Col, Divider, notification } from "antd";
-import { Link,useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginAPI } from "../services/api.service";
 
 const LoginPage = () => {
@@ -9,7 +9,6 @@ const LoginPage = () => {
 
   const onFinish = async (values) => {
     const res = await loginAPI(values.email, values.password);
-    console.log(">>> check res: ", res);
 
     if (res.data) {
       notification.success({
