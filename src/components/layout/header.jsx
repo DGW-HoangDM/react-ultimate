@@ -5,12 +5,18 @@ import {
   AuditOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../context/auth.context";
+
 const Header = () => {
   const [current, setCurrent] = useState("");
+  const {user} = useContext(AuthContext);
+
+  console.log('check user context', user);
+
   const onClick = (e) => {
     setCurrent(e.key);
   };
