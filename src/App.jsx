@@ -4,9 +4,10 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { getAccountAPI } from "./services/api.service";
 import { AuthContext } from "./components/context/auth.context";
+import { Spin } from "antd";
 
 const App = () => {
-  const { setUser } = useContext(AuthContext);
+  const { setUser, isLoading, setIsLoading } = useContext(AuthContext);
 
   useEffect(() => {
     feetUserInfo();
@@ -17,13 +18,31 @@ const App = () => {
     if (res.data) {
       setUser(res.data.user); // Set user to AuthContext
     }
+
+    setIsLoading(false); // Set isLoading to false after fetching user info
   };
 
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      {isLoading === true ? (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zindex: 1,
+          }}
+        >
+          <Spin />
+        </div>
+      ) : (
+        <>
+          <Header />
+          <Outlet />
+          <Footer />
+        </>
+      )}
     </>
   );
 };
