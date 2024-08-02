@@ -13,6 +13,7 @@ import "./styles/global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthWrapper } from "./components/context/auth.context.jsx";
+import ProtectedRoute from "./pages/private.route";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/books",
-        element: <BookPage />,
+        element: (
+          <ProtectedRoute>
+            <BookPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
