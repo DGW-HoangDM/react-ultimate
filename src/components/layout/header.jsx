@@ -1,9 +1,10 @@
 import { Menu } from "antd";
 import {
   UsergroupAddOutlined,
+  LoginOutlined,
   HomeOutlined,
   AuditOutlined,
-  SettingOutlined,
+  AliwangwangOutlined,
 } from "@ant-design/icons";
 import { useState, useContext } from "react";
 
@@ -13,9 +14,9 @@ import { AuthContext } from "../context/auth.context";
 
 const Header = () => {
   const [current, setCurrent] = useState("");
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  console.log('check user context', user);
+  console.log("check user context", user);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -36,21 +37,23 @@ const Header = () => {
       key: "books",
       icon: <AuditOutlined />,
     },
-    {
-      label: "Cài đặt",
+    //Conditionally add object to an array while being declared
+    ...!user.id ? [{
+      label: <Link to={"/login"}>Đăng nhập</Link>,
+      key: "login",
+      icon: <LoginOutlined />,
+    }] : [],
+    ...user.id ? [{
+      label: `Welcome: ${user.fullName}`,
       key: "setting",
-      icon: <SettingOutlined />,
+      icon: <AliwangwangOutlined />,
       children: [
-        {
-          label: <Link to={"/login"}>Đăng nhập</Link>,
-          key: "login",
-        },
         {
           label: "Đăng xuất",
           key: "logout",
         },
       ],
-    },
+    }] : [],
   ];
 
   return (
