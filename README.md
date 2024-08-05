@@ -42,3 +42,9 @@ Cách chạy tại chế độ production:
   - Truyền access token vào Request Headers
   - BE tạo API có nhiệm vụ trả về thông tin user tương ứng với access token đó
   - Tại application (trong dự án là file App.jsx) gọi API đó để tất cả các component khác dùng được thông tin user
+
+4. logout
+  - call API to logout
+  - remove the access token
+  - reset user
+  - redirect to home page
